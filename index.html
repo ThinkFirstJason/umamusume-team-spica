@@ -8,9 +8,40 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&family=Montserrat:ital,wght@0,800;0,900;1,900&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/brand/logo.webp">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="is-booting">
+
+  <!-- Shared SVG art: the gacha gate door (left half; the right half is mirrored) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="metalG" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="300" y2="600">
+        <stop offset="0" stop-color="#f4f6fb"/><stop offset=".35" stop-color="#a9b1c4"/><stop offset=".55" stop-color="#e9edf5"/><stop offset="1" stop-color="#7c8599"/>
+      </linearGradient>
+      <linearGradient id="rainbowG" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="600">
+        <stop offset="0" stop-color="#8a7dff"/><stop offset=".2" stop-color="#4fb8ff"/><stop offset=".4" stop-color="#4ff0c8"/>
+        <stop offset=".58" stop-color="#c8f560"/><stop offset=".74" stop-color="#ffd34d"/><stop offset=".88" stop-color="#ff8a5c"/><stop offset="1" stop-color="#ff4f7d"/>
+      </linearGradient>
+      <filter id="glowBlur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7"/></filter>
+      <symbol id="doorArt" viewBox="0 0 300 600">
+        <g id="doorMesh"></g>
+        <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="282" height="582" rx="8" stroke-width="14"/>
+          <path d="M14 290 Q60 236 130 204 Q200 176 292 178" stroke-width="12"/>
+          <path d="M14 424 Q120 334 292 318" stroke-width="12"/>
+          <path d="M292 214 C232 212 188 240 196 284 C202 316 246 318 248 290 C250 270 228 266 220 280" stroke-width="10"/>
+          <path d="M292 300 C246 292 214 304 182 278 C150 252 112 250 96 274 C84 294 104 312 120 300" stroke-width="10"/>
+          <path d="M150 238 Q176 270 162 318" stroke-width="8"/>
+          <path d="M16 340 C66 336 78 366 58 386 C42 400 28 380 42 372" stroke-width="9"/>
+          <path d="M70 300 C92 262 130 252 150 262" stroke-width="7"/>
+          <path d="M120 360 Q160 330 210 340 Q240 346 260 330" stroke-width="7"/>
+          <path d="M14 540 H292 M14 562 H292" stroke-width="7"/>
+          <path d="M40 586 Q60 548 90 562 M150 586 Q170 548 200 562 M250 586 Q262 556 284 560" stroke-width="6"/>
+        </g>
+      </symbol>
+    </defs>
+  </svg>
 
   <!-- ===== Custom cursor + trail ===== -->
   <canvas id="trail" aria-hidden="true"></canvas>
@@ -23,14 +54,8 @@
   <div id="boot" role="dialog" aria-label="Loading">
     <div class="boot-stripes"></div>
     <div class="boot-inner">
-      <svg class="boot-shoe" viewBox="0 0 120 120" aria-hidden="true">
-        <path class="shoe-path" d="M30 104 C8 76 10 30 60 18 C110 30 112 76 90 104" fill="none" stroke-width="14" stroke-linecap="round"/>
-        <g class="shoe-nails"><circle cx="27" cy="72" r="4"/><circle cx="93" cy="72" r="4"/><circle cx="34" cy="44" r="4"/><circle cx="86" cy="44" r="4"/></g>
-      </svg>
-      <h1 class="boot-title" aria-label="Umamusume">
-        <span>U</span><span>M</span><span>A</span><span>M</span><span>U</span><span>S</span><span>U</span><span>M</span><span>E</span>
-      </h1>
-      <div class="boot-ribbon">PRETTY DERBY <small>· fan site ·</small></div>
+      <div class="boot-logo"><img src="assets/brand/logo.webp" alt="Umamusume: Pretty Derby" width="649" height="187"><img class="logo-shine" src="assets/brand/logo.webp" alt="" aria-hidden="true"></div>
+      <div class="boot-ribbon">TEAM SPICA <small>· fan site ·</small></div>
       <div class="boot-load">
         <div class="boot-bar"><div class="boot-fill"></div><div class="boot-runner">🐎</div></div>
         <div class="boot-pct">0%</div>
@@ -38,6 +63,7 @@
       <button class="boot-start" type="button">TAP TO START</button>
       <p class="boot-note">Sound on recommended ♪</p>
     </div>
+    <p class="boot-legal">Unofficial fan site. Umamusume: Pretty Derby and all characters depicted belong to Cygames, Inc.</p>
   </div>
 
   <!-- ===== HUD ===== -->
@@ -51,148 +77,39 @@
   <!-- ===== Intro: Tokyo Racecourse ===== -->
   <section id="intro" aria-label="Tokyo Racecourse">
     <div class="stage">
-      <div class="zoom">
-        <div class="tilt">
-          <!-- Sky -->
-          <div class="layer" data-depth="4" data-zoom=".15">
-            <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
-              <defs>
-                <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#3ea6f2"/><stop offset=".55" stop-color="#8fd2ff"/><stop offset="1" stop-color="#e9f8ff"/>
-                </linearGradient>
-                <radialGradient id="sun" cx=".78" cy=".14" r=".5">
-                  <stop offset="0" stop-color="#fffbe0" stop-opacity=".95"/><stop offset=".25" stop-color="#fff6c2" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
-                </radialGradient>
-              </defs>
-              <rect width="1600" height="900" fill="url(#sky)"/>
-              <rect width="1600" height="900" fill="url(#sun)"/>
-            </svg>
-          </div>
-          <div class="layer clouds" data-depth="8" data-zoom=".3">
-            <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div><div class="cloud c4"></div>
-          </div>
-          <!-- Far: Fuji + skyline -->
-          <div class="layer" data-depth="12" data-zoom=".35">
-            <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
-              <defs>
-                <linearGradient id="fuji" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6f8fd0"/><stop offset="1" stop-color="#a9c6ee"/></linearGradient>
-              </defs>
-              <path d="M180 470 L430 300 Q455 284 480 300 L760 470 Z" fill="url(#fuji)"/>
-              <path d="M392 326 L430 300 Q455 284 480 300 L520 326 L497 320 L480 336 L460 322 L440 338 L420 322 Z" fill="#fff"/>
-              <path d="M0 470 Q200 430 380 452 T760 446 T1180 440 T1600 452 V480 H0 Z" fill="#9cc0e6"/>
-              <g fill="#88aedb">
-                <rect x="860" y="408" width="22" height="64"/><rect x="886" y="424" width="30" height="48"/><rect x="920" y="398" width="16" height="74"/>
-                <rect x="1210" y="414" width="26" height="58"/><rect x="1240" y="428" width="40" height="44"/><rect x="1286" y="404" width="18" height="68"/>
-                <rect x="96" y="430" width="30" height="42"/><rect x="130" y="418" width="20" height="54"/>
-              </g>
-            </svg>
-          </div>
-          <!-- Mid: trees, grandstand, screen -->
-          <div class="layer" data-depth="20" data-zoom=".7">
-            <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
-              <defs>
-                <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#cfe0f0"/></linearGradient>
-                <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5d86b8"/><stop offset="1" stop-color="#2f4f7c"/></linearGradient>
-                <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#57d06a"/><stop offset="1" stop-color="#1e8f52"/></linearGradient>
-              </defs>
-              <!-- tree line -->
-              <path d="M0 482 Q30 450 60 470 Q90 440 130 466 Q170 438 210 468 Q260 444 300 470 Q350 446 400 472 Q450 448 500 474 Q560 452 610 476 Q680 456 740 478 L740 500 H0 Z" fill="#3f9a4f"/>
-              <path d="M1340 480 Q1380 452 1420 474 Q1470 448 1520 472 Q1560 450 1600 470 V500 H1340Z" fill="#3f9a4f"/>
-              <!-- Turf Vision screen (infield) -->
-              <g transform="translate(200 352)">
-                <rect x="-8" y="100" width="12" height="40" fill="#5b6b7d"/><rect x="380" y="100" width="12" height="40" fill="#5b6b7d"/>
-                <rect x="-20" y="-6" width="424" height="112" rx="6" fill="#2a3442"/>
-                <rect x="-12" y="2" width="408" height="96" rx="3" fill="url(#screen)"/>
-                <text x="192" y="52" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="900" font-size="38" fill="#fff" font-style="italic">TOKYO</text>
-                <text x="192" y="84" text-anchor="middle" font-family="'M PLUS Rounded 1c', sans-serif" font-weight="800" font-size="20" fill="#eaffd8" letter-spacing="6">東京レース場</text>
-              </g>
-              <!-- Grandstand -->
-              <g>
-                <path d="M840 520 L860 360 L1600 330 L1600 520 Z" fill="#e7eef6"/>
-                <path d="M820 368 Q1200 300 1600 316 L1600 340 Q1220 326 836 386 Z" fill="url(#roof)" stroke="#b9cde2" stroke-width="2"/>
-                <path d="M862 392 L1600 362 L1600 420 L856 444 Z" fill="url(#glass)"/>
-                <g stroke="#e7eef6" stroke-width="4">
-                  <line x1="940" y1="389" x2="936" y2="441"/><line x1="1040" y1="385" x2="1037" y2="438"/><line x1="1140" y1="381" x2="1138" y2="434"/><line x1="1240" y1="377" x2="1239" y2="431"/><line x1="1340" y1="373" x2="1340" y2="428"/><line x1="1440" y1="369" x2="1441" y2="425"/><line x1="1540" y1="365" x2="1542" y2="422"/>
-                </g>
-                <path d="M852 452 L1600 428 L1600 520 L842 520 Z" fill="#cdd9e6"/>
-                <g fill="#b6c5d6"><path d="M852 470 L1600 448 V456 L852 478Z"/><path d="M848 490 L1600 470 V478 L848 498Z"/></g>
-                <!-- crowd specks -->
-                <g class="crowd" fill="#ff7aa8"><circle cx="900" cy="486" r="3"/><circle cx="980" cy="482" r="3"/><circle cx="1130" cy="478" r="3"/><circle cx="1320" cy="470" r="3"/><circle cx="1470" cy="466" r="3"/></g>
-                <g class="crowd" fill="#ffd34d"><circle cx="940" cy="504" r="3"/><circle cx="1060" cy="498" r="3"/><circle cx="1210" cy="494" r="3"/><circle cx="1390" cy="488" r="3"/><circle cx="1540" cy="484" r="3"/></g>
-                <g class="crowd" fill="#4fb5ff"><circle cx="1010" cy="510" r="3"/><circle cx="1170" cy="506" r="3"/><circle cx="1280" cy="502" r="3"/><circle cx="1440" cy="496" r="3"/></g>
-              </g>
-              <!-- Flags -->
-              <g class="flags">
-                <line x1="880" y1="360" x2="880" y2="320" stroke="#8a9bb0" stroke-width="3"/><path class="flag" d="M880 320 l26 6 l-26 7z" fill="#ff5b8a"/>
-                <line x1="1180" y1="320" x2="1180" y2="280" stroke="#8a9bb0" stroke-width="3"/><path class="flag" d="M1180 280 l26 6 l-26 7z" fill="#59c13c"/>
-                <line x1="1480" y1="314" x2="1480" y2="274" stroke="#8a9bb0" stroke-width="3"/><path class="flag" d="M1480 274 l26 6 l-26 7z" fill="#3ea6f2"/>
-              </g>
-            </svg>
-          </div>
-          <!-- Track -->
-          <div class="layer" data-depth="30" data-zoom="1">
-            <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
-              <defs>
-                <linearGradient id="turf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5cc45a"/><stop offset="1" stop-color="#2f9c46"/></linearGradient>
-                <linearGradient id="dirt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9a066"/><stop offset="1" stop-color="#b97a45"/></linearGradient>
-                <pattern id="mow" width="140" height="900" patternUnits="userSpaceOnUse" patternTransform="skewX(-28)">
-                  <rect width="70" height="900" fill="#fff" opacity=".07"/>
-                </pattern>
-              </defs>
-              <rect y="480" width="1600" height="420" fill="url(#turf)"/>
-              <rect y="480" width="1600" height="420" fill="url(#mow)"/>
-              <!-- infield + dirt course -->
-              <path d="M-200 540 Q800 486 1800 540 L1800 560 Q800 506 -200 560 Z" fill="url(#dirt)"/>
-              <path d="M-200 560 Q800 506 1800 560 L1800 580 Q800 528 -200 580Z" fill="#4db353"/>
-              <!-- inner rail -->
-              <path d="M-200 582 Q800 530 1800 582" fill="none" stroke="#fff" stroke-width="5"/>
-              <!-- far rail -->
-              <path d="M-200 492 Q800 470 1800 492" fill="none" stroke="#fff" stroke-width="3" opacity=".9"/>
-              <!-- home straight lanes -->
-              <path d="M-200 760 Q800 690 1800 760" fill="none" stroke="#fff" stroke-width="2" opacity=".25"/>
-              <!-- outer rail (near) -->
-              <path d="M-200 862 Q800 790 1800 862" fill="none" stroke="#fff" stroke-width="9"/>
-              <g stroke="#fff" stroke-width="6">
-                <line x1="40" y1="848" x2="40" y2="900"/><line x1="320" y1="830" x2="320" y2="890"/><line x1="600" y1="820" x2="600" y2="880"/><line x1="1000" y1="820" x2="1000" y2="880"/><line x1="1280" y1="830" x2="1280" y2="890"/><line x1="1560" y1="848" x2="1560" y2="900"/>
-              </g>
-            </svg>
-          </div>
-          <!-- Starting gate -->
-          <div class="layer gate-layer" data-depth="40" data-zoom="1">
-            <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
-              <defs>
-                <linearGradient id="gateFrame" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4fcf6a"/><stop offset="1" stop-color="#22914a"/></linearGradient>
-              </defs>
-              <ellipse cx="800" cy="702" rx="290" ry="22" fill="#000" opacity=".16"/>
-              <g id="gate">
-                <rect x="534" y="586" width="532" height="20" rx="6" fill="url(#gateFrame)"/>
-                <text x="800" y="601" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="900" font-size="13" fill="#fff" letter-spacing="4">TOKYO RACECOURSE</text>
-                <g id="stalls"></g>
-                <rect x="530" y="604" width="540" height="8" fill="#1d7a3e"/>
-                <rect x="530" y="690" width="540" height="10" rx="3" fill="#1d7a3e"/>
-                <circle cx="556" cy="704" r="9" fill="#333"/><circle cx="1044" cy="704" r="9" fill="#333"/>
-              </g>
-            </svg>
-          </div>
-          <!-- Foreground petals -->
-          <div class="layer petals" data-depth="60" data-zoom=".8"></div>
-        </div>
+      <div class="tilt">
+        <div class="layer" data-depth="4" data-zoom=".25"><svg id="L-sky" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"></svg></div>
+        <div class="layer" data-depth="9" data-zoom=".4"><div class="drift"><svg id="L-clouds" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"></svg></div></div>
+        <div class="layer" data-depth="14" data-zoom=".7"><svg id="L-far" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"></svg></div>
+        <div class="layer" data-depth="24" data-zoom="1"><svg id="L-ground" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"></svg></div>
+        <div class="layer" data-depth="30" data-zoom="1"><svg id="L-stand" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"></svg></div>
+        <div class="layer" data-depth="46" data-zoom="1.25"><svg id="L-fg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"></svg></div>
+        <div class="layer petals" data-depth="64" data-zoom="1.4"></div>
       </div>
 
-      <!-- Close-up gate -->
+      <!-- Close-up gacha gate -->
       <div class="gate-close" aria-hidden="true">
-        <div class="gc-glow"></div>
+        <div class="gc-bg"></div>
+        <div class="gc-light"></div>
         <div class="gc-frame">
-          <div class="gc-top">ゲートイン <span>GATE IN</span></div>
+          <div class="gc-post"></div>
           <div class="gc-doors">
-            <div class="gc-door left"><span>7</span></div>
-            <div class="gc-door right"><span>7</span></div>
+            <div class="gc-door left">
+              <svg class="metal" viewBox="0 0 300 600"><use href="#doorArt" stroke="url(#metalG)"/></svg>
+              <svg class="glow" viewBox="0 0 300 600"><use href="#doorArt" stroke="url(#rainbowG)" filter="url(#glowBlur)" opacity=".9"/><use href="#doorArt" stroke="url(#rainbowG)"/></svg>
+            </div>
+            <div class="gc-door right">
+              <svg class="metal" viewBox="0 0 300 600"><use href="#doorArt" stroke="url(#metalG)"/></svg>
+              <svg class="glow" viewBox="0 0 300 600"><use href="#doorArt" stroke="url(#rainbowG)" filter="url(#glowBlur)" opacity=".9"/><use href="#doorArt" stroke="url(#rainbowG)"/></svg>
+            </div>
+            <div class="gc-seam"></div>
           </div>
+          <div class="gc-post"></div>
         </div>
       </div>
 
       <div class="intro-copy">
-        <p class="kicker">Unofficial fan site</p>
+        <img class="intro-logo" src="assets/brand/logo.webp" alt="Umamusume: Pretty Derby" width="649" height="187">
         <h2>Welcome to <em>Tokyo Racecourse</em></h2>
         <p class="hint"><span class="mouse"><span></span></span> Scroll to enter the gate</p>
       </div>
@@ -203,6 +120,7 @@
   <div id="burst" aria-hidden="true">
     <div class="rays"></div>
     <div class="ring"></div>
+    <div class="ring r2"></div>
     <div class="flash"></div>
     <div class="burst-title">
       <div class="stars"><span>★</span><span>★</span><span>★</span></div>
@@ -212,26 +130,27 @@
     <canvas id="confetti"></canvas>
   </div>
 
-  <!-- ===== Roster ===== -->
+  <!-- ===== Roster: Tracen Academy ===== -->
   <main id="roster" aria-label="Team Spica roster">
+    <div class="tracen-bg" aria-hidden="true"><img src="assets/bg/tracen-academy.jpg" alt="" loading="lazy"></div>
     <header class="roster-head">
       <div class="ribbon"><span class="rb-jp">チームスピカ</span><span class="rb-en">TEAM SPICA</span></div>
-      <p class="roster-sub">Choose an Umamusume to view her profile</p>
+      <p class="roster-sub">Tracen Academy · choose an Umamusume to view her profile</p>
     </header>
-    <div class="card-grid" id="cardGrid"></div>
+    <div class="lineup-wrap"><div class="lineup" id="lineup"></div></div>
     <footer class="roster-foot">
       <button class="btn btn-white" id="replayBtn" type="button" data-hover>
         <svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Replay Gate
       </button>
-      <p class="disclaimer">Unofficial fan project. Umamusume: Pretty Derby and its characters belong to Cygames, Inc. Real-life race records are for the original racehorses.</p>
+      <p class="disclaimer">Unofficial fan project. Umamusume: Pretty Derby and all characters depicted belong to Cygames, Inc. Real-life race records are for the original racehorses.</p>
     </footer>
   </main>
 
   <!-- ===== Detail ===== -->
   <section id="detail" aria-hidden="true" aria-label="Character profile">
     <div class="detail-bg"></div>
-    <div class="detail-portrait"><div class="dp-card"></div></div>
+    <div class="detail-portrait"><img class="dp-img" alt=""></div>
     <article class="detail-info">
       <div class="di-epithet"></div>
       <h2 class="di-name"></h2>
@@ -252,6 +171,7 @@
 
   <audio id="song" src="assets/audio/umapyoi-densetsu.mp3" preload="auto"></audio>
   <script src="js/data.js"></script>
+  <script src="js/scene.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

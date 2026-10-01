@@ -1,5 +1,5 @@
-// Team Spica roster. `card` points at finished card art; members without one
-// get a generated card in the same style until art is added.
+// Team Spica roster. `img` is the G1 racewear art; `height` (cm, from the game)
+// sets how tall each girl stands in the line-up.
 window.SPICA = [
   {
     id: 'special-week',
@@ -7,7 +7,7 @@ window.SPICA = [
     jp: 'スペシャルウィーク',
     epithet: 'Special Dreamer',
     color: '#c43fd6', color2: '#7b2bbf', accent: '#ffd6f6',
-    card: 'assets/cards/special-week.jpg',
+    img: 'assets/chars/special-week.webp', height: 158,
     bio: [
       'A country girl from Hokkaido with a huge heart and an even bigger appetite, Special Week arrives at Tracen Academy carrying a promise to both of her mothers: to become the best Umamusume in Japan. Raised by a human mother after losing the one who gave birth to her, she runs with an honesty that wins over everyone around her.',
       'She joins Team Spica chasing her idol, Silence Suzuka, and grows from a wide-eyed transfer student into a Derby winner. Her rivalries with El Condor Pasa and Grass Wonder push her to her limits, and her charge in the Japan Cup cements her as the heart of the team.'
@@ -25,7 +25,7 @@ window.SPICA = [
     jp: 'サイレンススズカ',
     epithet: 'Innocent Silence',
     color: '#2fae5c', color2: '#137a45', accent: '#d8ffe4',
-    card: 'assets/cards/silence-suzuka.jpg',
+    img: 'assets/chars/silence-suzuka.webp', height: 161,
     bio: [
       'Quiet, gentle and almost impossible to catch, Silence Suzuka lives for one thing: the view from the front. She breaks from the gate and simply never lets anyone pass, running not to beat her rivals but to see the scenery that only the leader gets to see.',
       'After struggling to fit a rigid team plan, she finds freedom with Team Spica, where her trainer lets her run her own way. Special Week\'s admiration for her becomes a bond that carries both of them through injury, recovery and the long road back to the turf.'
@@ -43,7 +43,7 @@ window.SPICA = [
     jp: 'トウカイテイオー',
     epithet: 'Top of Joyful Stage',
     color: '#2f86e8', color2: '#1d4fae', accent: '#ffe066',
-    card: null,
+    img: 'assets/chars/tokai-teio.webp', height: 150,
     bio: [
       'Bright, cocky and endlessly energetic, Tokai Teio is famous for her bouncing "Teio Step" and her dream of becoming an undefeated Triple Crown winner, just like her hero, the Emperor Symboli Rudolf. She treats every race as a stage, and she always wants the spotlight.',
       'Repeated leg fractures take the Triple Crown away from her and nearly end her career, but Teio refuses to stay down. Her comeback, cheered on by Spica and her rival Mejiro McQueen, turns her into a symbol of never giving up.'
@@ -61,7 +61,7 @@ window.SPICA = [
     jp: 'メジロマックイーン',
     epithet: 'Elegance Line',
     color: '#8a6fe0', color2: '#4c3a9c', accent: '#e8ddff',
-    card: null,
+    img: 'assets/chars/mejiro-mcqueen.webp', height: 159,
     bio: [
       'Heiress of the prestigious Mejiro family, Mejiro McQueen carries herself with perfect manners and a duty to win the Tennō Shō for her house. She is a stayer with stamina to spare, at her best over the longest and toughest distances.',
       'Underneath the refined image is a girl who can\'t resist sweets and turns into a passionate shouting baseball fan in the stands. Her rivalry and friendship with Tokai Teio is one of the defining stories of Team Spica.'
@@ -79,7 +79,7 @@ window.SPICA = [
     jp: 'ウオッカ',
     epithet: 'Wild Top Gear',
     color: '#3a3d4a', color2: '#16171d', accent: '#ffd23a',
-    card: null,
+    img: 'assets/chars/vodka.webp', height: 165,
     bio: [
       'Vodka wants to be cool, and she means it. Motorcycles, leather jackets and doing things her own way are everything to her, and she refuses to back down from a challenge just because it is supposed to be impossible.',
       'Her eternal rival is Daiwa Scarlet. They argue about everything, compete over everything, and somehow keep making each other faster. When Vodka sets her sights on the Japanese Derby, a race fillies almost never win, she runs straight at the history books.'
@@ -97,7 +97,7 @@ window.SPICA = [
     jp: 'ダイワスカーレット',
     epithet: 'Peak Blue',
     color: '#ff5a46', color2: '#c4253c', accent: '#ffe1d6',
-    card: null,
+    img: 'assets/chars/daiwa-scarlet.webp', height: 154,
     bio: [
       'Daiwa Scarlet has one goal in everything she does: be number one. In front of others she is the polished honor student, always composed and always first, but behind that is a fiercely competitive girl who hates to lose.',
       'Her rivalry with Vodka gives Team Spica its loudest arguments and some of its best races. Scarlet runs from the front with unshakable consistency, and she wants the whole world to see her at the top.'
@@ -115,7 +115,7 @@ window.SPICA = [
     jp: 'ゴールドシップ',
     epithet: 'Red Strife',
     color: '#e8323c', color2: '#a3141f', accent: '#ffe08a',
-    card: 'assets/cards/gold-ship.jpg',
+    img: 'assets/chars/gold-ship.webp', height: 170,
     bio: [
       'Nobody knows what Gold Ship will do next, possibly including Gold Ship. She recruits new members by stuffing them into sacks, drops kicks on teammates and goes off on bizarre schemes at a moment\'s notice. She is Team Spica\'s self-appointed agent of chaos.',
       'When she actually decides to run, though, she is a monster. Her long, relentless late surge can swallow an entire field, and her total unpredictability makes her one of the most beloved Umamusume at Tracen.'
